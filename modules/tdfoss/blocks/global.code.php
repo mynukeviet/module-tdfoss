@@ -16,8 +16,8 @@ if (!nv_function_exists('nv_block_code')) {
 
     function nv_block_code_config($module, $data_block, $lang_block)
     {
-        if (file_exists(NV_ROOTDIR . '/' . NV_ASSETS_DIR . '/block_code.txt')) {
-            $code = file_get_contents(NV_ROOTDIR . '/' . NV_ASSETS_DIR . '/block_code.txt');
+        if (file_exists(NV_ROOTDIR . '/' . NV_FILES_DIR . '/block_code.txt')) {
+            $code = file_get_contents(NV_ROOTDIR . '/' . NV_FILES_DIR . '/block_code.txt');
         } else {
             $code = '';
         }
@@ -34,7 +34,7 @@ if (!nv_function_exists('nv_block_code')) {
         global $nv_Request;
 
         $code = $_POST['config_code'];
-        file_put_contents(NV_ROOTDIR . '/' . NV_ASSETS_DIR . '/block_code.txt', $code);
+        file_put_contents(NV_ROOTDIR . '/' . NV_FILES_DIR . '/block_code.txt', $code);
     }
 
     function nv_block_code($block_config)
@@ -51,8 +51,8 @@ if (!nv_function_exists('nv_block_code')) {
 
         $xtpl = new XTemplate('global.code.tpl', NV_ROOTDIR . '/themes/' . $block_theme . '/modules/tdfoss');
 
-        if (file_exists(NV_ROOTDIR . '/' . NV_ASSETS_DIR . '/block_code.txt')) {
-            $code = file_get_contents(NV_ROOTDIR . '/' . NV_ASSETS_DIR . '/block_code.txt');
+        if (file_exists(NV_ROOTDIR . '/' . NV_FILES_DIR . '/block_code.txt')) {
+            $code = file_get_contents(NV_ROOTDIR . '/' . NV_FILES_DIR . '/block_code.txt');
             $xtpl->assign('CODE', $code);
         }
 
