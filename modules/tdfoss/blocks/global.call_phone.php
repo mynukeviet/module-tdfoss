@@ -56,7 +56,7 @@ if (!nv_function_exists('nv_block_call_phone')) {
         $return = array();
         $return['error'] = array();
         $return['config'] = array();
-        $return['config']['phone'] = $nv_Request->get_int('config_phone', 'post', '');
+        $return['config']['phone'] = $nv_Request->get_title('config_phone', 'post', '');
         $return['config']['position'] = $nv_Request->get_title('config_position', 'post', 'right');
         $return['config']['position_x'] = $nv_Request->get_int('config_position_x', 'post', 50);
         $return['config']['position_y'] = $nv_Request->get_int('config_position_y', 'post', 15);
@@ -66,6 +66,8 @@ if (!nv_function_exists('nv_block_call_phone')) {
     function nv_block_call_phone($block_config)
     {
         global $module_info, $site_mods, $global_config;
+
+        if (empty($block_config['phone'])) return '';
 
         $module = $block_config['module'];
         $mod_upload = $site_mods[$module]['module_upload'];
@@ -81,8 +83,6 @@ if (!nv_function_exists('nv_block_call_phone')) {
         } else {
             $block_config['phone_icon'] = NV_BASE_SITEURL . 'themes/' . $block_theme . '/images/tdfoss/phone-icon.png';
         }
-
-        if (empty($block_config['phone']) || empty($block_config['phone_icon'])) return '';
 
         $xtpl = new XTemplate('global.call_phone.tpl', NV_ROOTDIR . '/themes/' . $block_theme . '/modules/tdfoss');
         $xtpl->assign('TEMPLATE', $block_theme);
