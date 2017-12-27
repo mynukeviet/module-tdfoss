@@ -60,9 +60,7 @@ if (!nv_function_exists('nv_block_fb_fanpage')) {
         $return['error'] = array();
         $return['config'] = array();
         $return['config']['href'] = $nv_Request->get_title('config_href', 'post', 'https://www.facebook.com/tdfoss.vn');
-        $return['config']['tabs'] = $nv_Request->get_array('config_tabs', 'post', array(
-            'timeline'
-        ));
+        $return['config']['tabs'] = $nv_Request->get_array('config_tabs', 'post');
         $return['config']['width'] = $nv_Request->get_int('config_width', 'post', 340);
         $return['config']['height'] = $nv_Request->get_int('config_height', 'post', 500);
         $return['config']['small_header'] = $nv_Request->get_int('config_small_header', 'post', 0);
