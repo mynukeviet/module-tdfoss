@@ -26,17 +26,24 @@ if (!nv_function_exists('nv_block_call_phone')) {
             $block_theme = 'default';
         }
 
-        $currentpath = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $mod_upload;
-        if (!empty($data_block['phone_icon']) and file_exists(NV_ROOTDIR . '/' . NV_UPLOADS_DIR . '/' . $mod_upload . '/' . $data_block['phone_icon'])) {
-            $currentpath = NV_UPLOADS_DIR . '/' . $mod_upload . '/' . dirname($data_block['phone_icon']);
-            $data_block['phone_icon'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $mod_upload . '/' . $data_block['phone_icon'];
-        }
+        $array_position = array(
+            'left' => $lang_block['position_left'],
+            'right' => $lang_block['position_right']
+        );
 
         $xtpl = new XTemplate('global.call_phone.tpl', NV_ROOTDIR . '/themes/' . $block_theme . '/modules/tdfoss');
         $xtpl->assign('LANG', $lang_block);
         $xtpl->assign('DATA', $data_block);
-        $xtpl->assign('MODULE_UPLOAD', $mod_upload);
-        $xtpl->assign('CURRENT_PATH', $currentpath);
+
+        foreach ($array_position as $index => $value) {
+            $ck = $index == $data_block['position'] ? 'checked="checked"' : '';
+            $xtpl->assign('POSITION', array(
+                'index' => $index,
+                'value' => $value,
+                'checked' => $ck
+            ));
+            $xtpl->parse('config.position');
+        }
 
         $xtpl->parse('config');
         return $xtpl->text('config');
@@ -50,13 +57,9 @@ if (!nv_function_exists('nv_block_call_phone')) {
         $return['error'] = array();
         $return['config'] = array();
         $return['config']['phone'] = $nv_Request->get_int('config_phone', 'post', '');
-        $phone_icon = $nv_Request->get_title('config_phone_icon', 'post', '');
-
-        if (!empty($phone_icon) and nv_is_file($phone_icon, NV_UPLOADS_DIR . '/' . $site_mods[$module]['module_upload']) === true) {
-            $lu = strlen(NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $site_mods[$module]['module_upload'] . '/');
-            $return['config']['phone_icon'] = substr($phone_icon, $lu);
-        }
-
+        $return['config']['position'] = $nv_Request->get_title('config_position', 'post', 'right');
+        $return['config']['position_x'] = $nv_Request->get_int('config_position_x', 'post', 50);
+        $return['config']['position_y'] = $nv_Request->get_int('config_position_y', 'post', 15);
         return $return;
     }
 

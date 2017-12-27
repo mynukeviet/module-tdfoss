@@ -1,7 +1,69 @@
 <!-- BEGIN: main -->
-<link rel="stylesheet" type="text/css" href="{NV_BASE_SITEURL}themes/{TEMPLATE}/css/tdfoss.css" />
-<div class="phone-icon">
-    <a href="tel:{CONFIG.phone}"><img src="{CONFIG.phone_icon}" /></a>
+<style>
+.sonar-wrapper {
+    z-index: 99999;
+    opacity: 0.5;
+    position: fixed;
+    bottom: {CONFIG.position_x}px;
+    {CONFIG.position}: {CONFIG.position_y}px;
+}
+
+/* The circle */
+.sonar-emitter {
+    position: relative;
+    margin: 32px auto;
+    width: 100px;
+    height: 100px;
+    border-radius: 9999px;
+    background-color: #E71C1C;
+}
+
+/* the 'wave', same shape and size as its parent */
+.sonar-wave {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 9999px;
+    background-color: #E71C1C;
+    opacity: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.sonar-emitter a {
+    font-size: 40px;
+    margin: 34px;
+    color: white;
+    font-weight: 800;
+}
+
+/*
+  Animate!
+  NOTE: add browser prefixes where needed.
+*/
+.sonar-wave {
+    animation: sonarWave 2s linear infinite;
+}
+
+@keyframes sonarWave {
+  from {
+    opacity: 0.4;
+  }
+  to {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+</style>
+
+<div class="sonar-wrapper">
+    <div class="sonar-emitter">
+        <div class="sonar-wave">          
+        </div>
+        <a href="tel:{CONFIG.phone}" class="fa fa-phone"></a>
+    </div>
 </div>
 <!-- END: main -->
 
@@ -11,23 +73,19 @@
     <td><input type="text" name="config_phone" class="form-control" value="{DATA.phone}"></td>
 </tr>
 <tr>
-    <td>{LANG.phone_icon}</td>
-    <td><div class="input-group">
-            <input class="form-control" type="text" name="config_phone_icon" value="{DATA.phone_icon}" id="image" /> <span class="input-group-btn">
-                <button class="btn btn-default selectfile" type="button">
-                    <em class="fa fa-folder-open-o fa-fix">&nbsp;</em>
-                </button>
-            </span>
-        </div></td>
+    <td>{LANG.position}</td>
+    <td>
+        <!-- BEGIN: position -->
+        <label><input type="radio" name="config_position" value="{POSITION.index}" {POSITION.checked}>{POSITION.value}</label>
+        <!-- END: position -->
+    </td>
 </tr>
-<script>
-    $(".selectfile").click(function() {
-        var area = "image";
-        var path = "{NV_UPLOADS_DIR}/{MODULE_UPLOAD}";
-        var currentpath = "{CURRENT_PATH}";
-        var type = "image";
-        nv_open_browse(script_name + "?" + nv_name_variable + "=upload&popup=1&area=" + area + "&path=" + path + "&type=" + type + "&currentpath=" + currentpath, "NVImg", 850, 420, "resizable=no,scrollbars=no,toolbar=no,location=no,status=no");
-        return false;
-    });
-</script>
+<tr>
+    <td>{LANG.position_x}</td>
+    <td><input type="text" name="config_position_x" class="form-control" value="{DATA.position_x}"></td>
+</tr>
+<tr>
+    <td>{LANG.position_x}</td>
+    <td><input type="text" name="config_position_y" class="form-control" value="{DATA.position_y}"></td>
+</tr>
 <!-- END: config -->
