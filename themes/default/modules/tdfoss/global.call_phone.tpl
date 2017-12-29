@@ -12,8 +12,8 @@
 .sonar-emitter {
     position: relative;
     margin: 32px auto;
-    width: 100px;
-    height: 100px;
+    width: 70px;
+    height: 70px;
     border-radius: 9999px;
     background-color: #E71C1C;
 }
@@ -34,7 +34,7 @@
 
 .sonar-emitter a {
     font-size: 40px;
-    margin: 34px;
+    margin: 18px;
     color: white;
     font-weight: 800;
 }
@@ -85,7 +85,7 @@
     <td><input type="text" name="config_position_x" class="form-control" value="{DATA.position_x}"></td>
 </tr>
 <tr>
-    <td>{LANG.position_x}</td>
+    <td>{LANG.position_y}</td>
     <td><input type="text" name="config_position_y" class="form-control" value="{DATA.position_y}"></td>
 </tr>
 <!-- END: config -->
