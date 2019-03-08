@@ -7,7 +7,6 @@
  * @License GNU/GPL version 2 or any later version
  * @Createdate Sun, 04 May 2014 12:41:32 GMT
  */
-
 if (!defined('NV_MAINFILE')) {
     die('Stop!!!');
 }
@@ -16,16 +15,22 @@ if (!nv_function_exists('nv_block_code')) {
 
     function nv_block_code_config($module, $data_block, $lang_block)
     {
-        if (file_exists(NV_ROOTDIR . '/' . NV_FILES_DIR . '/block_code.txt')) {
-            $code = file_get_contents(NV_ROOTDIR . '/' . NV_FILES_DIR . '/block_code.txt');
+        if (empty($data_block['filename'])) {
+            $data_block['filename'] = 'block_code_' . md5(NV_CURRENTTIME) . '.txt';
+        }
+
+        if (file_exists(NV_ROOTDIR . '/' . NV_FILES_DIR . '/' . $data_block['filename'])) {
+            $code = file_get_contents(NV_ROOTDIR . '/' . NV_FILES_DIR . '/' . $data_block['filename']);
         } else {
             $code = '';
         }
 
-        $html = '<tr>';
-        $html .= '	<td>Code</td>';
-        $html .= '	<td><textarea name="config_code" class="form-control" style="height: 300px">' . $code . '</textarea></td>';
-        $html .= '</tr>';
+        $html = '';
+        $html .= '<div class="form-group">';
+        $html .= '<label class="control-label col-sm-6">Code</label>';
+        $html .= '<div class="col-sm-18"><textarea name="config_code" class="form-control" style="height: 300px">' . $code . '</textarea></div>';
+        $html .= '</div>';
+        $html .= '<input type="hidden" name="config_filename" value="' . $data_block['filename'] . '" />';
         return $html;
     }
 
@@ -33,8 +38,15 @@ if (!nv_function_exists('nv_block_code')) {
     {
         global $nv_Request;
 
-        $code = $_POST['config_code'];
-        file_put_contents(NV_ROOTDIR . '/' . NV_FILES_DIR . '/block_code.txt', $code);
+        $return = array();
+        $return['error'] = array();
+        $return['config'] = array();
+
+        $filename = $nv_Request->get_title('config_filename', 'post', 'block_code_' . md5(NV_CURRENTTIME));
+        file_put_contents(NV_ROOTDIR . '/' . NV_FILES_DIR . '/' . $filename, $_POST['config_code']);
+        $return['config']['filename'] = $filename;
+
+        return $return;
     }
 
     function nv_block_code($block_config)
@@ -51,8 +63,8 @@ if (!nv_function_exists('nv_block_code')) {
 
         $xtpl = new XTemplate('global.code.tpl', NV_ROOTDIR . '/themes/' . $block_theme . '/modules/tdfoss');
 
-        if (file_exists(NV_ROOTDIR . '/' . NV_FILES_DIR . '/block_code.txt')) {
-            $code = file_get_contents(NV_ROOTDIR . '/' . NV_FILES_DIR . '/block_code.txt');
+        if (!empty($block_config['filename']) && file_exists(NV_ROOTDIR . '/' . NV_FILES_DIR . '/' . $block_config['filename'])) {
+            $code = file_get_contents(NV_ROOTDIR . '/' . NV_FILES_DIR . '/' . $block_config['filename']);
             $xtpl->assign('CODE', $code);
         }
 
