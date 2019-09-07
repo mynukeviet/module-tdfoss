@@ -38,6 +38,7 @@ if (!nv_function_exists('nv_block_image_slider')) {
         $xtpl->assign('LANG', $lang_block);
 
         if (empty($data_block['image'])) {
+            $data_block['image'] = array();
             $data_block['image'][] = array(
                 'index' => 0,
                 'path' => '',
@@ -101,7 +102,7 @@ if (!nv_function_exists('nv_block_image_slider')) {
      */
     function nv_block_image_slider($block_config)
     {
-        global $page_title, $global_config, $client_info, $lang_global, $site_mods;
+        global $global_config, $lang_global, $site_mods;
 
         if (empty($block_config['image'])) {
             return '';
