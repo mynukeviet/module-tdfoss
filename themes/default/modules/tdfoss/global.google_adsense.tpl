@@ -1,7 +1,7 @@
 <!-- BEGIN: main -->
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- Block center -->
-<ins class="adsbygoogle" <!-- BEGIN: size -->style="display:inline-block;width:{CONFIG.width}px;height:{CONFIG.width}px"<!-- END: size --> <!-- BEGIN: auto -->style="display: block"<!-- END: auto --> data-ad-client="{CONFIG.idclient}" data-ad-slot="{CONFIG.idslot}" data-ad-format="auto"></ins>
+<ins class="adsbygoogle" <!-- BEGIN: size -->style="display:inline-block;width:{CONFIG.width}px;height:{CONFIG.height}px"<!-- END: size --> <!-- BEGIN: auto -->style="display: block"<!-- END: auto --> data-ad-client="{CONFIG.idclient}" data-ad-slot="{CONFIG.idslot}" data-ad-format="auto" data-full-width-responsive="true"></ins>
 <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
